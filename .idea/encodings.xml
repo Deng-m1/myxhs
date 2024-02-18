@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/comment/comment-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/comment/comment-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/comment/comment-infrastructure/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/comment/comment-trigger/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/comment/comment-types/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/comment/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/counter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/post/post-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/post/post-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/post/post-infrastructure/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/post/post-trigger/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/post/post-types/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/post/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-domain/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-infrastructure/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-infrastructure/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-trigger/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-trigger/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-types/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/user-types/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

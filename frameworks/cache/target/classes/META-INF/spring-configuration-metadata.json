@@ -1,0 +1,84 @@
+{
+  "groups": [
+    {
+      "name": "framework.cache.redis",
+      "type": "cn.dbj.framework.starter.cache.config.RedisDistributedProperties",
+      "sourceType": "cn.dbj.framework.starter.cache.config.RedisDistributedProperties"
+    },
+    {
+      "name": "framework.cache.redis.bloom-filter.default",
+      "type": "cn.dbj.framework.starter.cache.config.BloomFilterPenetrateProperties",
+      "sourceType": "cn.dbj.framework.starter.cache.config.BloomFilterPenetrateProperties"
+    },
+    {
+      "name": "mydredis.database",
+      "type": "cn.dbj.framework.starter.cache.config.MydRedisProperties",
+      "sourceType": "cn.dbj.framework.starter.cache.config.MydRedisProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "framework.cache.redis.bloom-filter.default.expected-insertions",
+      "type": "java.lang.Long",
+      "description": "每个元素的预期插入量",
+      "sourceType": "cn.dbj.framework.starter.cache.config.BloomFilterPenetrateProperties"
+    },
+    {
+      "name": "framework.cache.redis.bloom-filter.default.false-probability",
+      "type": "java.lang.Double",
+      "description": "预期错误概率",
+      "sourceType": "cn.dbj.framework.starter.cache.config.BloomFilterPenetrateProperties"
+    },
+    {
+      "name": "framework.cache.redis.bloom-filter.default.name",
+      "type": "java.lang.String",
+      "description": "布隆过滤器默认实例名称",
+      "sourceType": "cn.dbj.framework.starter.cache.config.BloomFilterPenetrateProperties"
+    },
+    {
+      "name": "framework.cache.redis.prefix",
+      "type": "java.lang.String",
+      "description": "Key 前缀",
+      "sourceType": "cn.dbj.framework.starter.cache.config.RedisDistributedProperties"
+    },
+    {
+      "name": "framework.cache.redis.prefix-charset",
+      "type": "java.lang.String",
+      "description": "Key 前缀字符集",
+      "sourceType": "cn.dbj.framework.starter.cache.config.RedisDistributedProperties"
+    },
+    {
+      "name": "framework.cache.redis.value-time-unit",
+      "type": "java.util.concurrent.TimeUnit",
+      "description": "时间单位",
+      "sourceType": "cn.dbj.framework.starter.cache.config.RedisDistributedProperties"
+    },
+    {
+      "name": "framework.cache.redis.value-timeout",
+      "type": "java.lang.Long",
+      "description": "默认超时时间",
+      "sourceType": "cn.dbj.framework.starter.cache.config.RedisDistributedProperties"
+    },
+    {
+      "name": "mydredis.database.database",
+      "type": "java.lang.Integer",
+      "sourceType": "cn.dbj.framework.starter.cache.config.MydRedisProperties"
+    },
+    {
+      "name": "mydredis.database.host",
+      "type": "java.lang.String",
+      "sourceType": "cn.dbj.framework.starter.cache.config.MydRedisProperties"
+    },
+    {
+      "name": "mydredis.database.password",
+      "type": "java.lang.String",
+      "sourceType": "cn.dbj.framework.starter.cache.config.MydRedisProperties"
+    },
+    {
+      "name": "mydredis.database.port",
+      "type": "java.lang.Integer",
+      "sourceType": "cn.dbj.framework.starter.cache.config.MydRedisProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,5 @@
+spring:
+  config:
+    name: comment-app
+  profiles:
+    active: dev

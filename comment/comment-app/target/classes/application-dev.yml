@@ -1,0 +1,68 @@
+server:
+  port: 8097
+
+
+# 线程池配置
+thread:
+  pool:
+    executor:
+      config:
+        core-pool-size: 20
+        max-pool-size: 50
+        keep-alive-time: 5000
+        block-queue-size: 5000
+        policy: CallerRunsPolicy
+
+# 数据库配置；启动时配置数据库资源信息
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/wb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  hikari:
+    pool-name: Retail_HikariCP
+    minimum-idle: 15 #最小空闲连接数量
+    idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
+    maximum-pool-size: 25 #连接池最大连接数，默认是10
+    auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
+    max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+    connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
+    connection-test-query: SELECT 1
+  type: com.zaxxer.hikari.HikariDataSource
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    redis:
+      database: 0
+      host: 127.0.0.1     # Redis服务器地址，修改为你的地址
+      port: 19379          # Redis服务器连接端口
+      password: 111111          # Redis服务器连接密码（默认为空）
+      timeout: 3000       # Redis服务器链接超时配置
+    mongodb:
+      uri: mongodb://localhost:27017/myxhs_db
+
+dubbo:
+  application:
+    name: comment
+    qosEnable: false
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: zookeeper://${zookeeper.address:127.0.0.1}:2181
+  consumer:
+    check: false
+    timeout: 5000
+    retries: 2
+  reference:
+    check: false
+
+# ========================== ↓↓↓↓↓↓ 七牛云配置 ↓↓↓↓↓↓ ==========================
+qiniu:
+  accessKey: Jmk5XtY47jJhLUs0sZYYiVzNUFafcczcApB9MuX3
+  secretKey: WB7Q1BE_onunO9O1g5f1SU-AG5eN-MJJHgvHotgW
+  # 对象储存
+  bucket: myxhs # 空间名称
+  zone: huadong # 存储区域
+  domain: s8hyswrkg.hd-bkt.clouddn.com # 访问域名

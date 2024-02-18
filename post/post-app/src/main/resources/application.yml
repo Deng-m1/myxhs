@@ -1,0 +1,5 @@
+spring:
+  config:
+    name: post-app
+  profiles:
+    active: dev

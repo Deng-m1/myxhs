@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dbj.mapper.CounterMapper">
+
+    <resultMap id="countResultMap" type="cn.dbj.model.Do.CountDo">
+        <id column="uid" property="uid"/>
+        <result column="obj_id" property="objId"/>
+        <result column="count_key" property="countKey"/>
+        <result column="count_value" property="countValue"/>
+    </resultMap>
+
+
+    <select id="getCounter" resultType="java.lang.Integer">
+        select count_value from `count`
+        where obj_id=#{objId} and obj_type=#{objType} and count_key=#{key} and is_deleted=0
+    </select>
+
+    <update id="setCounter">
+        INSERT INTO `count` (uid, count_key, obj_id, count_value)
+        VALUES (#{uid}, #{key}, #{objId}, #{value})
+        ON DUPLICATE KEY UPDATE count_value = count_value + VALUES(count_value);
+    </update>
+
+    <select id="getCounters" resultMap="countResultMap">
+        select obj_id,count_key,count_value from `count`
+        where obj_id=#{objId} and obj_type=#{objType} and count_key in
+        <foreach collection="keys" item="key" separator="," open="(" close=")">
+            #{key}
+        </foreach>
+    </select>
+
+    <update id="setCounters">
+        <foreach collection="list" item="countDo" separator=";">
+            update `count` set count_value = count_value+#{counter.countValue}
+            where count_key=#{counter.countKey} and obj_id=#{counter.objId} and obj_type=#{objType}
+        </foreach>
+    </update>
+
+</mapper>

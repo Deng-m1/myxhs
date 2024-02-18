@@ -1,0 +1,59 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: counter-client
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: counter-group
+  datasource:
+    # 指定 ShardingSphere 自定义驱动类
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    # 指定 ShardingSphere 自定义配置文件路径地址
+    url: jdbc:shardingsphere:classpath:shardingsphere-config.yaml
+    username: root
+    password: root
+    # 配置Druid连接池参数
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 1 from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  data:
+    redis:
+      database: 0
+      host: 127.0.0.1     # Redis服务器地址，修改为你的地址
+      port: 19379          # Redis服务器连接端口
+      password: 111111          # Redis服务器连接密码（默认为空）
+      timeout: 3000
+    mongodb:
+      uri: mongodb://localhost:27017/myxhs_db
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  config: classpath:logback.xml
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+dubbo:
+  application:
+    name: count-provider
+    qosEnable: false
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: zookeeper://${zookeeper.address:127.0.0.1}:2181
+
+

@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="counter-1.0">
+    <output-path>$PROJECT_DIR$/out/artifacts/counter_1_0</output-path>
+    <root id="archive" name="counter-1.0.jar">
+      <element id="directory" name="cn">
+        <element id="directory" name="dbj">
+          <element id="directory" name="model">
+            <element id="file-copy" path="$PROJECT_DIR$/counter/src/main/java/cn/dbj/model/CountDTO.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/counter/target/classes/cn/dbj/model/CountDTO.class" />
+          </element>
+          <element id="directory" name="service">
+            <element id="file-copy" path="$PROJECT_DIR$/counter/src/main/java/cn/dbj/service/AccurateCounterService.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/counter/src/main/java/cn/dbj/service/BlurCounterService.java" />
+            <element id="file-copy" path="$PROJECT_DIR$/counter/target/classes/cn/dbj/service/AccurateCounterService.class" />
+            <element id="file-copy" path="$PROJECT_DIR$/counter/target/classes/cn/dbj/service/BlurCounterService.class" />
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

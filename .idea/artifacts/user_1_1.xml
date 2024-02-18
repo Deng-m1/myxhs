@@ -1,0 +1,48 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="user-1.1">
+    <output-path>$PROJECT_DIR$/../artifacts</output-path>
+    <root id="archive" name="user-1.1.jar">
+      <element id="directory" name="cn">
+        <element id="directory" name="dbj">
+          <element id="directory" name="domain">
+            <element id="directory" name="follow">
+              <element id="directory" name="service">
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/target/classes/cn/dbj/domain/follow/service/AttentionService.class" />
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/target/classes/cn/dbj/domain/follow/service/FollowService.class" />
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/target/classes/cn/dbj/domain/follow/service/RelationQueryService.class" />
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/src/main/java/cn/dbj/domain/follow/service/AttentionService.java" />
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/src/main/java/cn/dbj/domain/follow/service/FollowService.java" />
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/src/main/java/cn/dbj/domain/follow/service/RelationQueryService.java" />
+              </element>
+            </element>
+            <element id="directory" name="userInfo">
+              <element id="directory" name="service">
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/src/main/java/cn/dbj/domain/userInfo/service/UserService.java" />
+                <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/target/classes/cn/dbj/domain/userInfo/service/UserService.class" />
+              </element>
+              <element id="directory" name="model">
+                <element id="directory" name="dto">
+                  <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/target/classes/cn/dbj/domain/userInfo/model/dto/FollowDTO.class" />
+                  <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/target/classes/cn/dbj/domain/userInfo/model/dto/UserDTO.class" />
+                  <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/target/classes/cn/dbj/domain/userInfo/model/dto/UserBaseDTO.class" />
+                  <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/src/main/java/cn/dbj/domain/userInfo/model/dto/FollowDTO.java" />
+                  <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/src/main/java/cn/dbj/domain/userInfo/model/dto/UserBaseDTO.java" />
+                  <element id="file-copy" path="$PROJECT_DIR$/user/user-domain/src/main/java/cn/dbj/domain/userInfo/model/dto/UserDTO.java" />
+                </element>
+              </element>
+            </element>
+          </element>
+          <element id="directory" name="infrastructure" />
+          <element id="directory" name="types">
+            <element id="directory" name="command">
+              <element id="file-copy" path="$PROJECT_DIR$/user/user-types/target/classes/cn/dbj/types/command/CreatUserCommand.class" />
+              <element id="file-copy" path="$PROJECT_DIR$/user/user-types/target/classes/cn/dbj/types/command/CreatUserResponse.class" />
+              <element id="file-copy" path="$PROJECT_DIR$/user/user-types/src/main/java/cn/dbj/types/command/CreatUserResponse.java" />
+              <element id="file-copy" path="$PROJECT_DIR$/user/user-types/src/main/java/cn/dbj/types/command/CreatUserCommand.java" />
+            </element>
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
