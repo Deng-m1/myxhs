@@ -17,4 +17,7 @@ public interface PostQueryService {
     Map<String, Boolean> queryPostIdsByUserIdList(Long userId, List<String> postIds);
 
 
+    List<String> getPostListIds();
+
+    List<String> queryPostListIdsByUserId(Long uid);
 }

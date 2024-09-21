@@ -2,15 +2,21 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="post-trigger" />
+        <module name="common-spring-boot-starter" />
+        <module name="web-spring-boot-starter" />
+        <module name="user-spring-boot-starter" />
         <module name="index12306-base-spring-boot-starter" />
         <module name="post-domain" />
         <module name="index12306-common-spring-boot-starter" />
+        <module name="cache-spring-boot-starter" />
         <module name="index12306-designpattern-spring-boot-starter" />
+        <module name="base-spring-boot-starter" />
         <module name="user-app" />
         <module name="index12306-database-spring-boot-starter" />
         <module name="qiniuyun" />
@@ -24,13 +30,19 @@
         <module name="user-infrastructure" />
         <module name="user-types" />
         <module name="index12306-log-spring-boot-starter" />
+        <module name="log-spring-boot-starter" />
         <module name="post-infrastructure" />
         <module name="index12306-convention-spring-boot-starter" />
         <module name="counter" />
+        <module name="convention-spring-boot-starter" />
+        <module name="database-spring-boot-starter" />
         <module name="index12306-idempotent-spirng-boot-starter" />
         <module name="comment-trigger" />
         <module name="user-domain" />
+        <module name="distributedid-spring-boot-starter" />
+        <module name="idempotent-spirng-boot-starter" />
         <module name="post-app" />
+        <module name="designpattern-spring-boot-starter" />
         <module name="index12306-user-spring-boot-starter" />
         <module name="comment-app" />
         <module name="user-trigger" />

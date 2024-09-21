@@ -35,7 +35,6 @@ public class KafkaDomainEventSender {
     public void send(DomainEvent event) {
         try {
             String type = event.getType().name();
-            String s = JSON.toJSONString(event);
             String eventString = myObjectMapper.writeValueAsString(event);
             extracted(eventString,type);
             domainEventDao.successPublish(event);

@@ -267,6 +267,25 @@ public class PostRepository extends MongoBaseRepository<Post> implements IPostRe
 
     }
 
+    @Override
+    public List<String> getPostListIds() {
+        Query query = new Query();
+        query.fields().include("_id"); // Include only the _id field
+
+        List<String> postIds = mongoTemplate.find(query, String.class, "post");
+
+        return postIds;
+    }
+    @Override
+    public List<String> getPostListByUserId(Long uid) {
+        Query query = new Query(Criteria.where("userId").is(uid));
+        query.fields().include("_id"); // Include only the _id field
+
+        List<String> postIds = mongoTemplate.find(query, String.class, "post");
+
+        return postIds;
+    }
+
     public void save(Post post) {
         PostMongoDo postMongoDo = PostMongoTranslator.INSTANCE.toPostMongo(post);
         System.out.println(postMongoDo.getTid());

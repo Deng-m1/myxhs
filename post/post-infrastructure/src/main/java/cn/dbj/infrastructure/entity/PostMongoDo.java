@@ -25,6 +25,9 @@ public class PostMongoDo {
      */
     private String title;
 
+    /**
+     * 帖子作者
+     */
 
     private Long userId;
     /**
@@ -50,6 +53,11 @@ public class PostMongoDo {
      * 帖子加入的话题
      */
     private List<String> topics;
+
+
+     /**
+     * 帖子类型
+     */
 
     private PostType postType;
     /**

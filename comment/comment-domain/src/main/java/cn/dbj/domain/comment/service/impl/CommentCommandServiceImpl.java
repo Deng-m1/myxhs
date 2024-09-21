@@ -7,6 +7,8 @@ import cn.dbj.domain.comment.service.CommentCommandService;
 import cn.dbj.framework.starter.designpattern.chain.AbstractChainContext;
 import cn.dbj.types.command.CreateCommentCommand;
 import cn.dbj.types.command.CreateCommentResponse;
+import cn.dbj.types.command.LikeCommentCommand;
+import cn.dbj.types.command.SimpleCommentResponse;
 import cn.dbj.types.enums.CommentMarkEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,9 +38,18 @@ public class CommentCommandServiceImpl implements CommentCommandService {
     public CreateCommentResponse createCommentToPost(CreateCommentCommand command)
     {
         CreateCommentCommandAbstractChainContext.handler(CommentMarkEnum.COMMENT_TEXT_CONTENT.name(),command);
-        Comment commentToComment = CommentFactory.createCommentToPost(command);
-        commentRepository.saveCommentToPost(commentToComment);
-        return new CreateCommentResponse(commentToComment.getId());
+        Comment commentToPost = CommentFactory.createCommentToPost(command);
+        commentRepository.saveCommentToPost(commentToPost);
+        return new CreateCommentResponse(commentToPost.getId());
+
+    }
+
+    @Transactional
+    @Override
+    public SimpleCommentResponse createCommentLike(LikeCommentCommand command)
+    {
+
+        return new SimpleCommentResponse();
 
     }
 

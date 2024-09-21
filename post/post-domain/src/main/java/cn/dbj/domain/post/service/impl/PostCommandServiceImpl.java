@@ -52,14 +52,15 @@ public class PostCommandServiceImpl implements PostCommandService {
         log.info("判断是不是大v",postingReqBody.getHotUser());
 
         CountDTO counter = blurCountService.getCounter(1L, postingReqBody.getUserId().toString(), RedisKeyConstant.ATTENTIONS_NUMBER);
-        if (counter.getCountValue()>1000L|| JdHotKeyStore.isHotKey(RedisKeyConstant.USER_QUERY))
+        if (counter.getCountValue()!=null && counter.getCountValue()>1000L|| JdHotKeyStore.isHotKey(RedisKeyConstant.USER_QUERY))
         {
             postingReqBody.setHotUser(true);
         }
         System.out.println("判断是不是大v"+postingReqBody.getHotUser());
 
 
-        post.publish(postingReqBody.getTitle(),postingReqBody.getSourceContent(),postingReqBody.getTopic(),postingReqBody.getHotUser());
+        post.publish(postingReqBody.getTitle(),postingReqBody.getSourceContent(),postingReqBody.getTopic(),postingReqBody.getHotUser()
+                    ,postingReqBody.getPostType(),postingReqBody.getMainShowUrl(),postingReqBody.getUrl());
 
         postMongoRepository.save(post);
 

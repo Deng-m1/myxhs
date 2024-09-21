@@ -17,6 +17,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class PostQueryServiceImpl implements PostQueryService {
+
     private final IPostRepository postMongoRepository;
     private final CounterRepository<PostLikeCount> PostCounterRepository;
 
@@ -68,5 +69,15 @@ public class PostQueryServiceImpl implements PostQueryService {
     @Override
     public Map<String, Boolean> queryPostIdsByUserIdList(Long userId, List<String> postIds) {
         return postMongoRepository.isPostLikedByUserList(userId,postIds);
+    }
+
+    @Override
+    public List<String> getPostListIds() {
+        return postMongoRepository.getPostListIds();
+    }
+
+    @Override
+    public List<String> queryPostListIdsByUserId(Long uid) {
+        return postMongoRepository.getPostListByUserId(uid);
     }
 }

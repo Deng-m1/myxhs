@@ -36,12 +36,12 @@ public class PostFeedPublishHandler implements DomainEventHandler {
     @DubboReference
     private RelationQueryService relationQueryService;
 
-    private RedisTemplate myRedisTemplate;
+    /*private RedisTemplate myRedisTemplate;
 
     @PostConstruct
     public void initr() {
         this.myRedisTemplate = ApplicationContextHolder.getBean(StringRedisTemplate.class);
-    }
+    }*/
 
 
     @Override
@@ -51,7 +51,7 @@ public class PostFeedPublishHandler implements DomainEventHandler {
 
     @Override
     public void handle(DomainEvent domainEvent, MyTaskRunner taskRunner) {
-        /*RedisTemplate redisTemplate = (RedisTemplate) distributedCache.getInstance();*/
+        RedisTemplate myRedisTemplate = (RedisTemplate) distributedCache.getInstance();
         log.info("PostPublishHandler handle");
         PostPublishEvent postPublishEvent = (PostPublishEvent) domainEvent;
         boolean hotkey=postPublishEvent.getHotUser();

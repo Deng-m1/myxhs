@@ -10,6 +10,7 @@ package cn.dbj.domain.comment.model.aggregate;
 import cn.dbj.domain.comment.model.entity.UserBaseInfo;
 import cn.dbj.domain.comment.model.valobj.CommentType;
 import cn.dbj.framework.starter.common.domain.AggregateRoot;
+import cn.dbj.framework.starter.common.events.CreatCommentToPostEvent;
 import lombok.*;
 
 import java.util.Date;
@@ -114,6 +115,6 @@ public class Comment extends AggregateRoot {
         this.createTime = date;
         this.deleted = i;
         this.imageUrl=imageUrl;
-
+        this.raiseEvent(new CreatCommentToPostEvent(id, userId, postId, targetUserId, parentId, parentUserId));
     }
 }

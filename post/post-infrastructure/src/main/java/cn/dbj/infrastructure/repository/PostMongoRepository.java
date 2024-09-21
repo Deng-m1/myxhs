@@ -30,6 +30,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -233,6 +234,12 @@ public class PostMongoRepository extends MongoBaseRepository<Post> implements IP
         post.setId(postId);
         return post;
     }
+
+    @Override
+    public List<String> getPostListByUserId(Long uid) {
+        return null;
+    }
+
     @Override
     public List<PostFeedBaseInfo> queryUserPostList(Long userId, int page, int size){
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -312,6 +319,16 @@ public class PostMongoRepository extends MongoBaseRepository<Post> implements IP
 
 
 
+    }
+
+    @Override
+    public List<String> getPostListIds() {
+        Query query = new Query();
+        query.fields().include("_id"); // Include only the _id field
+
+        List<String> postIds = mongoTemplate.find(query, String.class, "post");
+
+        return postIds;
     }
 
     /**

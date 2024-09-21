@@ -6,6 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Posting请求体
  * @author daoqidelv
@@ -36,6 +40,18 @@ public class PostingReqBody extends RequestBody {
     
     @NotEmpty(message="{request.post.posting.content.not.empty}")
     private String sourceContent;
+
+	private String postType;
+	/**
+	 * 帖子首图，如果是视频类型就是视频
+	 */
+	private String mainShowUrl;
+	/**
+	 * 图片链接
+	 */
+	private List<String> url;
+
+
 
 	public Long getUserId() {
 		return userId;

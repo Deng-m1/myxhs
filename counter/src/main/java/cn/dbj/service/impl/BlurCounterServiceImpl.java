@@ -33,9 +33,11 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -54,6 +56,9 @@ public class BlurCounterServiceImpl implements BlurCounterService {
 
     public final DistributedCache distributedCache;
 
+
+    private final ThreadPoolTaskExecutor customThreadPoolTaskExecutor;
+
     //冷数据添加到缓存过期时间
     private final Long DATABASE_EXPIRE_TIME = 2L;
 
@@ -61,7 +66,7 @@ public class BlurCounterServiceImpl implements BlurCounterService {
     private final Long CACHE_EXPIRE_TIME = 8L;
 
     //缓冲区阈值
-    private final Integer BUFF_COUNT = 10000;
+    private final Integer BUFF_COUNT = 1000;
 
     private final String COUNT_PREFIX = "counter_";
 
@@ -110,16 +115,16 @@ public class BlurCounterServiceImpl implements BlurCounterService {
                 .removalListener((String keys, Object value, RemovalCause cause) -> {
                     //缓存移除，直接修改数据库
                     //COUNT_INFO + objId + objType + key + uid
-                    System.out.println(cause+"    ----    "+value);
                     if (cause==RemovalCause.EXPLICIT||cause==RemovalCause.EXPIRED)
                     {
+                        kafkaTemplate.send("counter-topic",keys+":"+value);
 
-                        String[] parts = keys.split(":"); // 拆分成数组
+                        /*String[] parts = keys.split(":"); // 拆分成数组
                         String objId = parts[1];
                         String key=parts[2];
                         Long uid = Long.parseLong(parts[3]);
 
-                        counterMapper.setCounter(uid, objId,key+":" , (Long) value);
+                        counterMapper.setCounter(uid, objId,key+":" , (Long) value);*/
 
                     }
 
@@ -209,14 +214,14 @@ public class BlurCounterServiceImpl implements BlurCounterService {
             //查询缓存
             counterValue= (Long)redisTemplate.opsForValue().get(ckey);
             if (!NullOrZeroUtils.isNullOrEmptyOrZero(counterValue)) {
-                //获取key过期时间
+                /*//获取key过期时间
                 Long expire = redisTemplate.opsForValue().getOperations().getExpire(ckey);
                 //判断过期时间是否小于1小时
                 if (expire<60*60){
                     //增加过期时间，不过这里QPS*2了，其实效率是比较低的了
                     redisTemplate.expire(key + ":" + objId , CACHE_EXPIRE_TIME , TimeUnit.HOURS);
                 }
-                //如果不为空直接返回就ok了
+                //如果不为空直接返回就ok了*/
                 return new CountDTO(uid,  objId , key , counterValue);
             }
             //如果countValue为空就说明缓存中是没有数据的，所以这里就需要去查询数据库
@@ -258,12 +263,13 @@ public class BlurCounterServiceImpl implements BlurCounterService {
     public CountDTO setCounter(Long uid ,String objId, String key, Long value) {
         StringRedisTemplate instance = (StringRedisTemplate) distributedCache.getInstance();
         /*Boolean bool = instance.hasKey(COUNT_INFO + objId + key + uid);*/
-        if (JdHotKeyStore.isHotKey(COUNT_INFO + objId + key + uid))
-        {
+        /*if (JdHotKeyStore.isHotKey(COUNT_INFO + objId + key + uid))
+        {*/
+        if(true){
             instance.opsForValue().increment(COUNT_INFO + objId + key + uid, value);
             //这里需要一个缓冲区来更新到数据库当中
             //添加到缓冲区中，批量更新数据库
-            logger.info(COUNT_INFO + objId + key + uid +"   ：----------是热key");
+            //logger.info(COUNT_INFO + objId + key + uid +"   ：----------是热key");
             putBuffer(uid ,objId , key , value);
         }else{
             //添加到数据库当中
@@ -293,8 +299,23 @@ public class BlurCounterServiceImpl implements BlurCounterService {
         List<String> values = results.stream().map(o -> (byte[]) o)
                 .map(bytes -> bytes != null ? new String(bytes) : null)
                 .toList();*/
+        List<CompletableFuture<CountDTO>> futures = new ArrayList<>();
 
-        return objIds.stream().map(objId -> getCounter(uid, objId, key)).toList();
+        for (String objId : objIds) {
+            CompletableFuture<CountDTO> future = CompletableFuture.supplyAsync(() -> getCounter(uid, objId, key), customThreadPoolTaskExecutor);
+            futures.add(future);
+        }
+
+        // 等待所有异步任务完成
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
+        // 收集所有完成的结果
+        CompletableFuture<List<CountDTO>> allResults = allOf.thenApply(v -> futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList()));
+
+        // 阻塞直到所有任务完成并返回结果
+        return allResults.join();
     }
 
     /**
@@ -307,7 +328,23 @@ public class BlurCounterServiceImpl implements BlurCounterService {
      */
     @Override
     public List<CountDTO> getCounters(List<Long> uid, String key, String objId) {
-        return uid.stream().map(uid1 -> getCounter(uid1, objId, key)).toList();
+        List<CompletableFuture<CountDTO>> futures = new ArrayList<>();
+
+        for (Long userId : uid) {
+            CompletableFuture<CountDTO> future = CompletableFuture.supplyAsync(() -> getCounter(userId, objId, key), customThreadPoolTaskExecutor);
+            futures.add(future);
+        }
+
+        // 等待所有异步任务完成
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
+        // 收集所有完成的结果
+        CompletableFuture<List<CountDTO>> allResults = allOf.thenApply(v -> futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList()));
+
+        // 阻塞直到所有任务完成并返回结果
+        return allResults.join();
     }
 
     /**
@@ -379,7 +416,6 @@ public class BlurCounterServiceImpl implements BlurCounterService {
         }else {
             logger.info("未获取到锁，失败。。。。。。。。。。。");
         }*/
-        logger.info("获取到锁"+uid);
         ConcurrentMap<@NonNull String, @NonNull Long> stringLongConcurrentMap = cache.asMap();
         Long aLong = stringLongConcurrentMap.compute(cKey, (k, v) -> (v == null) ? value : v + value);
         /*Long countValue = cache.getIfPresent(cKey);
@@ -404,7 +440,6 @@ public class BlurCounterServiceImpl implements BlurCounterService {
         if (aLong>=BUFF_COUNT){
             cache.invalidate(cKey);
         }
-        logger.info("aLong===     "+aLong);
         /*Long countValue = (Long)cache.getIfPresent(COUNT_INFO + objId + objType + key + uid);
         //判断
         if (!NullOrZeroUtils.isNullOrEmptyOrZero(countValue)){

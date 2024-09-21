@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import cn.dbj.domain.post.model.entity.Topic;
 import cn.dbj.framework.starter.common.Constant.RedisKeyConstant;
 import cn.dbj.framework.starter.common.events.CountChangeEvent;
 import cn.dbj.framework.starter.common.events.PostPublishEvent;
@@ -69,6 +70,8 @@ public class Post extends AggregateRoot {
 	/**
 	 * 帖子首图，如果是视频类型就是视频
 	 */
+
+
 	private String mainShowUrl;
 	/**
 	 * 图片链接
@@ -245,6 +248,29 @@ public class Post extends AggregateRoot {
 
 	public void setId(String postId) {
 		super.setId(postId);
+	}
+
+
+	public void publish(String title, String sourceContent, String topic, Boolean hotUser, String postType, String mainShowUrl, List<String> url) {
+		//TODO 为了方便先设置状态为已发布
+		this.setStatus(PostStatus.HAS_POSTED);
+		this.setTitle(title);
+		this.setSourceContent(sourceContent);
+		this.joinTopics(topic);
+		this.setType(postType);
+		this.setMainShowUrl(mainShowUrl);
+		this.setUrl(url);
+		//TODO 创建事件，1.如果是大v则，推送到发件箱 2.推送到话题 3.如果是大v则，推送到活跃粉丝 ，否则推送到所有粉丝
+		this.raiseEvent(new PostPublishEvent(hotUser,this.getAuthorId(),this.getId(),this.getPostingTime()));
+
+	}
+
+	private void setType(String postType) {
+		if (postType.equals("00")) {
+			this.setPostType(PostType.PICTURE);
+		} else if (postType.equals("01")) {
+			this.setPostType(PostType.VIDEO);
+		}
 	}
 
 	/*public PostAuthor getPostAuthor() {

@@ -1,8 +1,13 @@
 package cn.dbj.controller;
 
+import cn.dbj.framework.starter.convention.result.Result;
+import cn.dbj.framework.starter.web.Results;
+import cn.dbj.model.CountDTO;
 import cn.dbj.service.BlurCounterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -24,16 +29,17 @@ public class BlurCounterController {
     @PostMapping("/set")
     public Result<Counter> setCounter(@RequestBody CountDo counter) {
         return Results.success(blurCounterService.setCounter(counter.getObjId(), counter.getObjType(), counter.getCountKey(), counter.getCountValue()));
-    }
+    }*/
 
 
     @PostMapping("/gets")
-    public Result<List<Counter>> getCounters(@RequestBody Counter counter) {
-        return Results.success(blurCounterService.getCounters(counter.getObjId(), counter.getObjType(), counter.getKeys()));
-    }*/
+    public Result<List<CountDTO>> getCounters(@RequestBody CountDTO counter) {
+        return Results.success(blurCounterService.getCounters(counter.getUid(), counter.getCountKey(), counter.getKeys()));
+    }
 
-    /*@PostMapping("/sets")
-    public Result<Counter> setCounters(CountDo counter) {
-        return Results.success(blurCounterService.setCounters(counter.getObjId(), counter.getObjType(), counter.getKv()));
-    }*/
+    @PostMapping("/set")
+    public Result<CountDTO> setCounters(@RequestBody CountDTO counter) {
+        return Results.success(blurCounterService.setCounter(counter.getUid(), counter.getObjId(), counter.getCountKey(),counter.getCountValue()));
+
+    }
 }

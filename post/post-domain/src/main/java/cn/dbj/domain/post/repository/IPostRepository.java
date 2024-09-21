@@ -29,6 +29,8 @@ public interface IPostRepository {
      */
     Post query(String postId);
 
+    List<String> getPostListByUserId(Long uid);
+
     /**
      * 保存指定帖子
      * @param post
@@ -45,4 +47,6 @@ public interface IPostRepository {
     List<PostFeedBaseInfo> queryUserPostList(Long uid,int page,int size);
 
     void likePost(Post post, Long uid);
+
+    List<String> getPostListIds();
 }

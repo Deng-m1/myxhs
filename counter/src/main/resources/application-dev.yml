@@ -6,8 +6,8 @@ thread:
   pool:
     executor:
       config:
-        core-pool-size: 20
-        max-pool-size: 50
+        core-pool-size: 50
+        max-pool-size: 100
         keep-alive-time: 5000
         block-queue-size: 5000
         policy: CallerRunsPolicy

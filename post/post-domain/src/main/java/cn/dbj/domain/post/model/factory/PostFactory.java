@@ -21,6 +21,7 @@ public class PostFactory {
         /*long l = (SnowflakeIdUtil.nextId() << 8) + (author % 256);
         String tid=Long.toString(l);*/
         Post post = new Post(tid,author);
+
         return post;
     }
 

@@ -11,7 +11,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-18T02:40:49+0800",
+    date = "2024-02-27T20:53:53+0800",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17 (Oracle Corporation)"
 )
 public class PostMongoTranslatorImpl implements PostMongoTranslator {
